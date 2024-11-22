@@ -129,6 +129,8 @@ fn run_cli<W: Write, R: Read, L: OutputPin, SPI, PADS, const I: usize>(
             #[command(subcommand)]
             command: Option<LedCommand>,
         },
+        /// Reload from sdcard.
+        Reload
     }
 
     #[derive(Command)]
@@ -177,6 +179,9 @@ fn run_cli<W: Write, R: Read, L: OutputPin, SPI, PADS, const I: usize>(
                             PinState::Low => cli.writer().write_str("LED state: On").unwrap(),
                         },
                     },
+                    Base::Reload =>{
+                        load_from_sdcard(d,_c);
+                    }
                 }
                 Ok(())
             }),
